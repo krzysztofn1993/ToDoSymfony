@@ -4,8 +4,8 @@ namespace App\Entity;
 
 use DateTime;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints\Length;
 use Symfony\Component\Validator\Constraints\NotBlank;
-use Symfony\Component\Validator\Constraints\Type;
 use Symfony\Component\Validator\Mapping\ClassMetadata;
 
 /**
@@ -62,6 +62,16 @@ class User
     public static function loadValidatorMetadata(ClassMetadata $classMetadata)
     {
         $classMetadata->addPropertyConstraint('username', new NotBlank());
-        $classMetadata->addPropertyConstraint('username', new Type(DateTime::class));
+        $classMetadata->addPropertyConstraint('username', new Length([
+            'min' => 4,
+            'minMessage' => 'Your username should have at least digidong',
+        ]));
+
+
+
+        $classMetadata->addPropertyConstraint('password', new Length([
+            'min' => 4,
+        ]));
+
     }
 }
