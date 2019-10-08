@@ -3,7 +3,7 @@
 namespace App\Controller;
 
 use App\Entity\User;
-use App\Forms\LoginForm;
+use App\Forms\CredentialsForm;
 use App\Services\User\CheckCredentials;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
@@ -25,11 +25,13 @@ class LoginController extends AbstractController
     {
         $user = new User();
 
-        $form = $this->createForm(LoginForm::class, $user);
+        $form = $this->createForm(CredentialsForm::class, $user);
 
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
+
+            echo 'sub&&valid';
             // if ($this->checkCredentials->execute($user)) {
 
             //     echo 'good';
@@ -43,37 +45,7 @@ class LoginController extends AbstractController
         }
 
         return $this->render('login/index.html.twig', [
-            'form' => $form->createView()
-        ]);
-    }
-
-
-    /**
-     * @Route("/rejestracja", name="register")
-     */
-    public function register (Request $request)
-    {
-        $user = new User();
-
-        $form = $this->createForm(LoginForm::class, $user);
-
-        $form->handleRequest($request);
-
-        if ($form->isSubmitted() && $form->isValid()) {
-            if ($this->checkCredentials->execute($user)) {
-
-                echo 'good';
-            }
-
-
-            return $this->render('login/index.html.twig', [
-                'form' => $form->createView(),
-                'wrongCredential' => true
-            ]);
-        }
-
-        return $this->render('login/index.html.twig', [
-            'form' => $form->createView()
+            'form' => $form->createView(),
         ]);
     }
 }
