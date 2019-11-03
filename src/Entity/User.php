@@ -2,7 +2,7 @@
 
 namespace App\Entity;
 
-use DateTime;
+use App\Repository\UserRepository;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Validator\Constraints\Length;
 use Symfony\Component\Validator\Constraints\NotBlank;
@@ -37,7 +37,7 @@ class User
 
     public function getUsername(): ?string
     {
-        return $this->username;
+        return $this->username ?? null;
     }
 
     public function setUsername(string $username): self
@@ -49,7 +49,7 @@ class User
 
     public function getPassword(): ?string
     {
-        return $this->password;
+        return $this->password ?? null;
     }
 
     public function setPassword(string $password): self
@@ -67,11 +67,8 @@ class User
             'minMessage' => 'Your username should have at least digidong',
         ]));
 
-
-
         $classMetadata->addPropertyConstraint('password', new Length([
-            'min' => 4,
+            'min' => 6,
         ]));
-
     }
 }

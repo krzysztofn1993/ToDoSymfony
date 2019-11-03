@@ -3,5 +3,14 @@
 {% block title %}Hello RegisterController!{% endblock %}
 
 {% block body %}
-Rejestracja
+    <div class="container">
+        <div class="row">
+            <div class="col-md-4">
+                {{ form_start(form, {'action': path('register'),'method': 'POST'}) }}
+                {{ form_widget(form) }}
+                {{ form_end(form) }}
+            </div>
+        </div>
+        <a href={{ path('home') }}>Login</a>
+    </div>
 {% endblock %}

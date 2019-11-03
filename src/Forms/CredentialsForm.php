@@ -15,6 +15,6 @@ class CredentialsForm extends AbstractType
         $formBuilderInterface
             ->add('username', TextType::class)
             ->add('password', PasswordType::class)
-            ->add('login', SubmitType::class);
+            ->add('register', SubmitType::class);
     }
 }

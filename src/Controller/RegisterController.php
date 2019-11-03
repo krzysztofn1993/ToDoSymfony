@@ -4,16 +4,27 @@ namespace App\Controller;
 
 use App\Entity\User;
 use App\Forms\CredentialsForm;
+use App\Repository\UserRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Annotation\Route;
 
 class RegisterController extends AbstractController
 {
+    private $userRepository;
+
     /**
-     * @Route("/rejestracja", name="register")
+     * Class constructor.
      */
-    public function index (Request $request)
+    public function __construct(UserRepository $userRepository)
+    {
+        $this->userRepository = $userRepository;
+    }
+
+    /**
+     * @Route("/registration", name="register")
+     */
+    public function index(Request $request)
     {
         $user = new User();
 
@@ -22,10 +33,24 @@ class RegisterController extends AbstractController
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-            echo 'sub&&valid';
+
+            $user->setPassword($request->get('password'));
+            $user->setUsername($request->get('username'));
+
+            var_dump($this->userRepository->findOneBy($user->getUsername()));
+
+            if (!$this->userRepository->getUserByName($user->getUsername())) {
+                echo $user->getUsername();
+                return $this->render('register/index.html.twig', [
+                    'form' => $form->createView(),
+                ]);
+            }
+
+
+            return $this->redirectToRoute('home', ['info' => 'User created'], 301);
         }
 
-        return $this->render('register/index.html.twig',[
+        return $this->render('register/index.html.twig', [
             'form' => $form->createView(),
         ]);
     }
