@@ -5,19 +5,30 @@ namespace App\Controller;
 use App\Entity\User;
 use App\Forms\CredentialsForm;
 use App\Repository\UserRepository;
+use App\Services\User\CreateUserService;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Annotation\Route;
 
 class RegisterController extends AbstractController
 {
+    /** @var CreateUserService $createUserService */
+    private $createUserService;
+
+    /** @var UserRepository $userRepository */
     private $userRepository;
 
     /**
-     * Class constructor.
+     * Class constructor
+     *
+     * @param CreateUserService $createUserService
+     * @param UserRepository $userRepository
      */
-    public function __construct(UserRepository $userRepository)
-    {
+    public function __construct(
+        CreateUserService $createUserService,
+        UserRepository $userRepository
+    ) {
+        $this->createUserService = $createUserService;
         $this->userRepository = $userRepository;
     }
 
@@ -34,18 +45,17 @@ class RegisterController extends AbstractController
 
         if ($form->isSubmitted() && $form->isValid()) {
 
-            $user->setPassword($request->get('password'));
-            $user->setUsername($request->get('username'));
+            $user->setPassword($request->request->get('credentials_form')['password']);
+            $user->setUsername($request->request->get('credentials_form')['username']);
 
-            var_dump($this->userRepository->findOneBy($user->getUsername()));
-
-            if (!$this->userRepository->getUserByName($user->getUsername())) {
+            if ($this->userRepository->getUserByName($user->getUsername())) {
                 echo $user->getUsername();
                 return $this->render('register/index.html.twig', [
                     'form' => $form->createView(),
                 ]);
             }
 
+            $this->createUserService->execute($user);
 
             return $this->redirectToRoute('home', ['info' => 'User created'], 301);
         }

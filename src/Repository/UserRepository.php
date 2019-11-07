@@ -14,11 +14,22 @@ use Symfony\Bridge\Doctrine\RegistryInterface;
  */
 class UserRepository extends ServiceEntityRepository
 {
+    /**
+     * Constructor
+     *
+     * @param RegistryInterface $registry
+     */
     public function __construct(RegistryInterface $registry)
     {
         parent::__construct($registry, User::class);
     }
 
+    /**
+     * Gets User by name from repository
+     *
+     * @param string $name
+     * @return User|null
+     */
     public function getUserByName(string $name): ?User
     {
         return $this->createQueryBuilder('user')
@@ -26,5 +37,13 @@ class UserRepository extends ServiceEntityRepository
             ->setParameter(':username', $name)
             ->getQuery()
             ->getOneOrNullResult();
+    }
+
+    public function create(User $user)
+    {
+        $em = $this->getEntityManager();
+
+        $em->persist($user);
+        $em->flush();
     }
 }

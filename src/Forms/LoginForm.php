@@ -10,6 +10,14 @@ use Symfony\Component\Form\FormBuilderInterface;
 
 class LoginForm extends AbstractType
 {
+
+    /**
+     * Function for creating form for login user
+     *
+     * @param FormBuilderInterface $formBuilderInterface
+     * @param array $options
+     * @return void
+     */
     public function buildForm(FormBuilderInterface $formBuilderInterface, array $options)
     {
         $formBuilderInterface
