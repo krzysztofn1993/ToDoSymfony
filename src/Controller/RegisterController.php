@@ -7,6 +7,7 @@ use App\Forms\CredentialsForm;
 use App\Repository\UserRepository;
 use App\Services\User\CreateUserService;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\Form\FormError;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Annotation\Route;
 
@@ -45,19 +46,26 @@ class RegisterController extends AbstractController
 
         if ($form->isSubmitted() && $form->isValid()) {
 
+            $fromError = new FormError('User already exists! Pick other Username.');
+            $form->addError($fromError);
+
             $user->setPassword($request->request->get('credentials_form')['password']);
             $user->setUsername($request->request->get('credentials_form')['username']);
 
             if ($this->userRepository->getUserByName($user->getUsername())) {
                 echo $user->getUsername();
+
                 return $this->render('register/index.html.twig', [
                     'form' => $form->createView(),
                 ]);
             }
 
+
             $this->createUserService->execute($user);
 
-            return $this->redirectToRoute('home', ['info' => 'User created'], 301);
+            $this->addFlash('success', 'User created!');
+
+            return $this->redirectToRoute('home', [], 301);
         }
 
         return $this->render('register/index.html.twig', [

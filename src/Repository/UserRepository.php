@@ -39,6 +39,13 @@ class UserRepository extends ServiceEntityRepository
             ->getOneOrNullResult();
     }
 
+
+    /**
+     * Persisting user to databse
+     *
+     * @param User $user
+     * @return void
+     */
     public function create(User $user)
     {
         $em = $this->getEntityManager();
