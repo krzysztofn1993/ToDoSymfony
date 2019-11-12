@@ -39,30 +39,26 @@ class RegisterController extends AbstractController
     public function index(Request $request)
     {
         $user = new User();
-
         $form = $this->createForm(CredentialsForm::class, $user);
 
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
 
-            $fromError = new FormError('User already exists! Pick other Username.');
-            $form->addError($fromError);
-
             $user->setPassword($request->request->get('credentials_form')['password']);
             $user->setUsername($request->request->get('credentials_form')['username']);
 
             if ($this->userRepository->getUserByName($user->getUsername())) {
-                echo $user->getUsername();
+
+                $fromError = new FormError('User already exists! Pick other Username.');
+                $form->addError($fromError);
 
                 return $this->render('register/index.html.twig', [
                     'form' => $form->createView(),
                 ]);
             }
 
-
             $this->createUserService->execute($user);
-
             $this->addFlash('success', 'User created!');
 
             return $this->redirectToRoute('home', [], 301);

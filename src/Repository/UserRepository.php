@@ -39,7 +39,6 @@ class UserRepository extends ServiceEntityRepository
             ->getOneOrNullResult();
     }
 
-
     /**
      * Persisting user to databse
      *
