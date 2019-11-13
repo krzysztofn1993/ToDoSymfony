@@ -29,7 +29,7 @@ class UserLoginService
      */
     public function execute(User $user): bool
     {
-        $userToCheckAgainst = $this->userRepository->getUser($user->getUsername);
+        $userToCheckAgainst = $this->userRepository->getUserByName($user->getUsername());
 
         if (isset($userToCheckAgainst)) {
 
@@ -40,7 +40,7 @@ class UserLoginService
     }
 
     /**
-     * Checks password against each other for  loging in user and found
+     * Checks password against each other for loging in user and found
      * user entity in db
      *
      * @param User $user
@@ -49,6 +49,6 @@ class UserLoginService
      */
     public function checkPassword(User $user, User $userToCheckAgainst): bool
     {
-        return $user->getPassword() === $userToCheckAgainst->getPassword();
+        return password_verify($user->getPassword(), $userToCheckAgainst->getPassword());
     }
 }
