@@ -45,7 +45,7 @@ class UserRepository extends ServiceEntityRepository
      * @param User $user
      * @return void
      */
-    public function create(User $user)
+    public function create(User $user): void
     {
         $em = $this->getEntityManager();
 

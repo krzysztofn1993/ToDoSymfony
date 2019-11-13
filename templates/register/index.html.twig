@@ -4,13 +4,13 @@
 
 {% block body %}
     <div class="container">
-        <div class="row">
+        <div class="row justify-content-center align-items-center min-vh-100">
             <div class="col-md-4">
                 {{ form_start(form, {'action': path('register'),'method': 'POST'}) }}
                 {{ form_widget(form) }}
                 {{ form_end(form) }}
+                <a href={{ path('home') }}>Login</a>
             </div>
         </div>
-        <a href={{ path('home') }}>Login</a>
     </div>
 {% endblock %}
