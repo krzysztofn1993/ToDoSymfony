@@ -14,9 +14,8 @@ class UserLoginService
      * Constructor
      *
      * @param UserRepository $userRepository
-     * @return void
      */
-    public function __constructor(UserRepository $userRepository)
+    public function __construct(UserRepository $userRepository)
     {
         $this->userRepository = $userRepository;
     }
