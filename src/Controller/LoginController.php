@@ -35,7 +35,9 @@ class LoginController extends AbstractController
             $user->setUsername($request->request->get('login_form')['username']);
 
             if ($this->userLoginService->execute($user)) {
-                echo 'go further';
+                $this->session->set('username', $user->getUsername());
+
+                return $this->redirectToRoute('tasks', [], 301);
             } else {
                 $formError = new FormError('Invalid username or password.');
                 $form->addError($formError);
