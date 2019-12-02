@@ -22,7 +22,7 @@ class UserLoggedIn implements EventSubscriberInterface
     {
         $controller = $event->getController()[0];
 
-        if ($controller instanceof UserLoggedInController && !$event->getRequest()->getSession()->has('username')) {
+        if ($controller instanceof UserLoggedInController && !$event->getRequest()->getSession()->has('user_id')) {
             $event->getRequest()->getSession()->getFlashBag()->add('warning', 'You have to be logged in.');
             $event->setController(function () {
                 return new RedirectResponse('/');

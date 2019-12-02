@@ -25,6 +25,7 @@ class LoginController extends AbstractController
     public function index(Request $request)
     {
         $user = new User();
+        $session = $request->getSession();
 
         $form = $this->createForm(LoginForm::class, $user);
 
@@ -35,7 +36,7 @@ class LoginController extends AbstractController
             $user->setUsername($request->request->get('login_form')['username']);
 
             if ($this->userLoginService->execute($user)) {
-                $this->session->set('username', $user->getUsername());
+                $session->set('user_id', $user->getId());
 
                 return $this->redirectToRoute('tasks', [], 301);
             } else {
