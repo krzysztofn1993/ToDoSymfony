@@ -4,25 +4,29 @@ namespace App\Services\EventSubscribers;
 
 use App\Interfaces\UserLoggedInController;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
+use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpKernel\KernelEvents;
-use Symfony\Component\HttpKernel\Event\RequestEvent;
+use Symfony\Component\HttpKernel\Event\ControllerEvent;
 
 class UserLoggedIn implements EventSubscriberInterface
 {
     public static function getSubscribedEvents()
     {
         return [
-            KernelEvents::REQUEST => 'onKernelRequest',
+            KernelEvents::CONTROLLER => 'onKernelController',
         ];
     }
 
-    public function onKernelRequest(RequestEvent $event)
+    public function onKernelController(ControllerEvent $event)
     {
-        if (!$event->getRequest()->getSession()->has('username')) {
-            $response = new Response('Sorry, you have to login to see this content', 401);
+        $controller = $event->getController()[0];
 
-            $event->setResponse($response);
+        if ($controller instanceof UserLoggedInController && !$event->getRequest()->getSession()->has('username')) {
+            $event->getRequest()->getSession()->getFlashBag()->add('warning', 'You have to be logged in.');
+            $event->setController(function () {
+                return new RedirectResponse('/');
+            });
         }
     }
 }
