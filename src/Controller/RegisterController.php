@@ -4,7 +4,7 @@ namespace App\Controller;
 
 use App\Entity\User;
 use App\Forms\CredentialsForm;
-use App\Repository\UserRepository;
+use App\Interfaces\User as InterfacesUser;
 use App\Services\User\CreateUserService;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\Form\FormError;
@@ -27,7 +27,7 @@ class RegisterController extends AbstractController
      */
     public function __construct(
         CreateUserService $createUserService,
-        UserRepository $userRepository
+        InterfacesUser $userRepository
     ) {
         $this->createUserService = $createUserService;
         $this->userRepository = $userRepository;
