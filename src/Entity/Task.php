@@ -19,39 +19,39 @@ class Task
     /**
      * @ORM\Column(type="string", length=1000)
      */
-    private $job;
+    private $task_description;
 
     /**
-     * @ORM\ManyToOne(targetEntity="User")
-     * @ORM\JoinColumn(name="user_id", referencedColumnName="id")
+     * @ORM\ManyToOne(targetEntity="App\Entity\User", inversedBy="tasks")
+     * @ORM\JoinColumn(nullable=false)
      */
-    private $userId;
+    private $task_user;
 
     public function getId(): ?int
     {
         return $this->id;
     }
 
-    public function getJob(): ?string
+    public function getTaskDescription(): ?string
     {
-        return $this->job;
+        return $this->task_description;
     }
 
-    public function setJob(string $job): self
+    public function setTaskDescription(string $task_description): self
     {
-        $this->job = $job;
+        $this->task_description = $task_description;
 
         return $this;
     }
 
-    public function getUserId(): ?int
+    public function getTaskUserId(): ?User
     {
-        return $this->userId;
+        return $this->task_user;
     }
 
-    public function setUserId(int $userId): self
+    public function setTaskUserId(?User $task_user): self
     {
-        $this->userId = $userId;
+        $this->task_user = $task_user;
 
         return $this;
     }

@@ -36,7 +36,9 @@ class LoginController extends AbstractController
             $user->setUsername($request->request->get('login_form')['username']);
 
             if ($this->userLoginService->execute($user)) {
-                $session->set('user_id', $user->getId());
+                $id = $this->userLoginService->getLoggedUser()->getId();
+                var_dump($id);
+                $session->set('user_id', $this->userLoginService->getLoggedUser()->getId());
 
                 return $this->redirectToRoute('tasks', [], 301);
             } else {

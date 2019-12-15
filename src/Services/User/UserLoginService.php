@@ -9,6 +9,7 @@ class UserLoginService
 {
     /** @var UserRepository $userRepository */
     private $userRepository;
+    private $loggedUser;
 
     /**
      * Constructor
@@ -32,6 +33,7 @@ class UserLoginService
 
         if (isset($userToCheckAgainst)) {
 
+
             return $this->checkPassword($user, $userToCheckAgainst);
         }
 
@@ -48,6 +50,17 @@ class UserLoginService
      */
     public function checkPassword(User $user, User $userToCheckAgainst): bool
     {
-        return password_verify($user->getPassword(), $userToCheckAgainst->getPassword());
+        if (password_verify($user->getPassword(), $userToCheckAgainst->getPassword())) {
+            $this->loggedUser = $userToCheckAgainst;
+
+            return true;
+        }
+
+        return false;
+    }
+
+    public function getLoggedUser(): ?User
+    {
+        return $this->loggedUser ?? null;
     }
 }
