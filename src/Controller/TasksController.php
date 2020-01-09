@@ -17,7 +17,6 @@ class TasksController extends AbstractController implements UserLoggedInControll
         $this->taskRepository = $taskRepository;
     }
 
-
     /**
      * @Route("/tasks", name="tasks")
      */
@@ -25,8 +24,11 @@ class TasksController extends AbstractController implements UserLoggedInControll
     {
         $tasks = $this->taskRepository->findBy(['task_user' => $request->getSession()->get('user_id')]);
 
-        return $this->render('tasks/index.html.twig', [
-            'controller_name' => 'TasksController',
-        ]);
+        return $this->render(
+            'tasks/index.html.twig',
+            [
+                'tasks' => $tasks
+            ]
+        );
     }
 }

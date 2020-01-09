@@ -20,9 +20,10 @@ class UserLoggedIn implements EventSubscriberInterface
     public function onKernelController(ControllerEvent $event)
     {
         $controller = $event->getController()[0];
+        $session = $event->getRequest()->getSession();
+        $session->migrate();
 
         if ($controller instanceof UserLoggedInController && !$event->getRequest()->getSession()->has('user_id')) {
-            $session = $event->getRequest()->getSession();
             // $session->getFlashBag()->add('warning', 'You have to be logged in.');
             $event->setController(function () {
                 return new RedirectResponse('/');
