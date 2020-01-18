@@ -10,25 +10,32 @@ document.addEventListener('DOMContentLoaded', function () {
             return;
         }
 
-        // fetch('/addTask', {
-        //     method: 'GET',
-        //     body: 
-        // });
+        sendTask(task);
     });
 
-    taskInput.addEventListener('keydown', function (eventTarget) {
-        eventTarget.clas
-
-        if (!testTask(eventTarget.value)) {
-
+    taskInput.addEventListener('keyup', function (event) {
+        if (!testTask(event.target.value)) {
+            event.target.classList.add('border', 'border-warning');
+            addButton.classList.add('border', 'border-warning', 'btn-outline-warning');
+            addButton.classList.remove('btn-outline-primary');
+        } else {
+            event.target.classList.remove('border', 'border-warning');
+            addButton.classList.remove('border', 'border-warning', 'btn-outline-warning');
+            addButton.classList.add('btn-outline-primary');
         }
     });
+
 
     function testTask(task) {
         return /\w/.test(task);
     }
 
-
-
-
+    function sendTask(task) {
+        let formRequest = new FormData();
+        formRequest.append('task', task);
+        fetch('./addTask', {
+            method: 'POST',
+            body: formRequest
+        });
+    }
 }, false);

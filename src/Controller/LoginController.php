@@ -51,16 +51,4 @@ class LoginController extends AbstractController
             'form' => $form->createView(),
         ]);
     }
-
-    /**
-     * @Route("/ses", name="ses")
-     */
-    public function session(Request $request)
-    {
-        $session = $request->getSession();
-
-        $session->clear();
-
-        return $this->redirectToRoute('home');
-    }
 }

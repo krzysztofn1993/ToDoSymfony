@@ -31,4 +31,12 @@ class TasksController extends AbstractController implements UserLoggedInControll
             ]
         );
     }
+    /**
+     * @Route("/addTask", name="add")
+     */
+    public function addTask(Request $request)
+    {
+        $a = $request->request->all();
+        $b = json_decode($a);
+    }
 }
