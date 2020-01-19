@@ -23,9 +23,9 @@ class Task
 
     /**
      * @ORM\ManyToOne(targetEntity="App\Entity\User", inversedBy="tasks")
-     * @ORM\JoinColumn(nullable=false)
+     * @ORM\JoinColumn(name="task_user_id", referencedColumnName="id")
      */
-    private $task_user;
+    private $task_user_id;
 
     public function getId(): ?int
     {
@@ -46,12 +46,12 @@ class Task
 
     public function getTaskUserId(): ?User
     {
-        return $this->task_user;
+        return $this->task_user_id;
     }
 
     public function setTaskUserId(?User $task_user): self
     {
-        $this->task_user = $task_user;
+        $this->task_user_id = $task_user;
 
         return $this;
     }

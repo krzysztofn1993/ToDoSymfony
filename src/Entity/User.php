@@ -33,7 +33,7 @@ class User
     private $password;
 
     /**
-     * @ORM\OneToMany(targetEntity="App\Entity\Task", mappedBy="task_user_id", orphanRemoval=true)
+     * @ORM\OneToMany(targetEntity="App\Entity\Task", mappedBy="task_user_id");
      */
     private $tasks;
 

@@ -2,8 +2,8 @@
 
 namespace App\Controller;
 
+use App\Interfaces\TaskRepository;
 use App\Interfaces\UserLoggedInController;
-use App\Repository\TaskRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Annotation\Route;
@@ -22,7 +22,7 @@ class TasksController extends AbstractController implements UserLoggedInControll
      */
     public function index(Request $request)
     {
-        $tasks = $this->taskRepository->findBy(['task_user' => $request->getSession()->get('user_id')]);
+        $tasks = $this->taskRepository->findBy(['task_user_id' => $request->getSession()->get('user_id')]);
 
         return $this->render(
             'tasks/index.html.twig',
@@ -36,7 +36,6 @@ class TasksController extends AbstractController implements UserLoggedInControll
      */
     public function addTask(Request $request)
     {
-        $a = $request->request->all();
-        $b = json_decode($a);
+        $task = $request->request->get('task');
     }
 }
