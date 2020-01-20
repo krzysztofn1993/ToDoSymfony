@@ -2,6 +2,7 @@
 
 namespace App\Controller;
 
+use App\Entity\Task;
 use App\Interfaces\TaskRepository;
 use App\Interfaces\UserLoggedInController;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -36,6 +37,13 @@ class TasksController extends AbstractController implements UserLoggedInControll
      */
     public function addTask(Request $request)
     {
-        $task = $request->request->get('task');
+        $userId = $request->getSession()->get('user_id');
+        $taskRequest = $request->request->get('task');
+
+        if (!isEmpty($taskRequest) && is_string($taskRequest)) {
+            $task = new Task($taskRequest, $userId);
+
+            $this->taskRepository->addTask($task);
+        }
     }
 }

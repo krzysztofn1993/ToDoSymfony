@@ -19,4 +19,12 @@ class TaskRepository extends ServiceEntityRepository implements InterfacesTaskRe
     {
         parent::__construct($registry, Task::class);
     }
+
+    public function addTask(Task $task): void
+    {
+        $em = $this->getEntityManager();
+
+        $em->persist($task);
+        $em->flush();
+    }
 }

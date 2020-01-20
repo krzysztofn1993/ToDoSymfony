@@ -3,7 +3,7 @@
 namespace App\Services\User;
 
 use App\Entity\User;
-use App\Interfaces\User as InterfacesUser;
+use App\Interfaces\UserRepository;
 
 class CreateUserService
 {
@@ -15,7 +15,7 @@ class CreateUserService
      *
      * @param InterfacesUser $userRepository
      */
-    public function __construct(InterfacesUser $userRepository)
+    public function __construct(UserRepository $userRepository)
     {
         $this->userRepository = $userRepository;
     }
