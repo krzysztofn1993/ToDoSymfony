@@ -13,7 +13,6 @@ class CreateUserService
     /**
      * Constructor
      *
-     * @param InterfacesUser $userRepository
      */
     public function __construct(UserRepository $userRepository)
     {

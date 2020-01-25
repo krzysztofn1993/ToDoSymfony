@@ -2,6 +2,7 @@
 
 namespace App\Controller;
 
+use App\Entity\User;
 use App\Forms\CredentialsForm;
 use App\Interfaces\UserRepository;
 use App\Services\User\CreateUserService;
@@ -22,7 +23,6 @@ class RegisterController extends AbstractController
      * Class constructor
      *
      * @param CreateUserService $createUserService
-     * @param UserRepository $userRepository
      */
     public function __construct(
         CreateUserService $createUserService,
@@ -44,9 +44,9 @@ class RegisterController extends AbstractController
 
         if ($form->isSubmitted() && $form->isValid()) {
             $user->setPassword($request->request->get('credentials_form')['password']);
-            $user->setUsername($request->request->get('credentials_form')['username']);
+            $user->setName($request->request->get('credentials_form')['name']);
 
-            if ($this->userRepository->getUserByName($user->getUsername())) {
+            if ($this->userRepository->findOneBy(['name' => $user->getName()])) {
 
                 $formError = new FormError('User already exists! Pick other Username.');
                 $form->addError($formError);

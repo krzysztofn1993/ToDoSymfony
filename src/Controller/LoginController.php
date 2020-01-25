@@ -33,7 +33,7 @@ class LoginController extends AbstractController
 
         if ($form->isSubmitted() && $form->isValid()) {
             $user->setPassword($request->request->get('login_form')['password']);
-            $user->setUsername($request->request->get('login_form')['username']);
+            $user->setName($request->request->get('login_form')['name']);
 
             if ($this->userLoginService->execute($user)) {
                 $session->set('user_id', $this->userLoginService->getLoggedUser()->getId());

@@ -11,11 +11,10 @@ use Doctrine\ORM\Mapping as ORM;
  */
 class Task
 {
-    public function __construct(string $task, int $userId)
+    public function __construct(string $task, User $user)
     {
-        $this->task_description = $task;
-        $this->task_user_id = $userId;
-        $this->deleted = false;
+        $this->task = $task;
+        $this->user = $user;
     }
 
     /**
@@ -28,13 +27,13 @@ class Task
     /**
      * @ORM\Column(type="string", length=1000)
      */
-    private $task_description;
+    private $task;
 
     /**
      * @ORM\ManyToOne(targetEntity="App\Entity\User", inversedBy="tasks")
-     * @ORM\JoinColumn(name="task_user_id", referencedColumnName="id")
+     * @ORM\JoinColumn(nullable=false)
      */
-    private $task_user_id;
+    private $user;
 
     /**
      * @ORM\Column(type="datetime")
@@ -42,40 +41,35 @@ class Task
     private $creationDate;
 
     /**
-     * @ORM\Column(type="datetime")
+     * @ORM\Column(type="datetime", nullable=true)
      */
     private $deletionDate;
-
-    /**
-     * @ORM\Column(type="boolean")
-     */
-    private $deleted;
 
     public function getId(): ?int
     {
         return $this->id;
     }
 
-    public function getTaskDescription(): ?string
+    public function getTask(): ?string
     {
-        return $this->task_description;
+        return $this->task;
     }
 
-    public function setTaskDescription(string $task_description): self
+    public function setTask(string $task): self
     {
-        $this->task_description = $task_description;
+        $this->task = $task;
 
         return $this;
     }
 
-    public function getTaskUserId(): ?User
+    public function getUserId(): ?User
     {
-        return $this->task_user_id;
+        return $this->user;
     }
 
-    public function setTaskUserId(?User $task_user): self
+    public function setUserId(?User $user): self
     {
-        $this->task_user_id = $task_user;
+        $this->user_id = $user;
 
         return $this;
     }
@@ -88,8 +82,12 @@ class Task
     /**
      * @ORM\PrePersist
      */
-    private function setCreationDate()
+    public function setCreationDate(): self
     {
+        if ($this->creationDate !== null) {
+            return $this;
+        }
+
         $this->creationDate = new DateTime();
 
         return $this;
@@ -100,22 +98,19 @@ class Task
         return $this->deletionDate;
     }
 
-    public function setDeletionDate(\DateTimeInterface $deletionDate): self
+    public function markAsDeleted(): self
     {
-        $this->deletionDate = $deletionDate;
+        if ($this->deletionDate !== null) {
+            return $this;
+        }
+
+        $this->deletionDate = new DateTime();
 
         return $this;
     }
 
-    public function getDeleted(): ?bool
+    public function __toString()
     {
-        return $this->deleted;
-    }
-
-    public function setDeleted(bool $deleted): self
-    {
-        $this->deleted = $deleted;
-
-        return $this;
+        return (string) $this->task;
     }
 }

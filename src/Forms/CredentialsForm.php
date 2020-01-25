@@ -20,7 +20,7 @@ class CredentialsForm extends AbstractType
     public function buildForm(FormBuilderInterface $formBuilderInterface, array $options)
     {
         $formBuilderInterface
-            ->add('username', TextType::class)
+            ->add('name', TextType::class)
             ->add('password', PasswordType::class)
             ->add('register', SubmitType::class);
     }

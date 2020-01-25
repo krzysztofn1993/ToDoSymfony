@@ -3,7 +3,7 @@
 namespace App\Services\User;
 
 use App\Entity\User;
-use App\Repository\UserRepository;
+use App\Interfaces\UserRepository;
 
 class UserLoginService
 {
@@ -14,7 +14,6 @@ class UserLoginService
     /**
      * Constructor
      *
-     * @param UserRepository $userRepository
      */
     public function __construct(UserRepository $userRepository)
     {
@@ -29,7 +28,7 @@ class UserLoginService
      */
     public function execute(User $user): bool
     {
-        $userToCheckAgainst = $this->userRepository->getUserByName($user->getUsername());
+        $userToCheckAgainst = $this->userRepository->findOneBy(['name' => $user->getName()]);
 
         if (isset($userToCheckAgainst)) {
 

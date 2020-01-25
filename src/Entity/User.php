@@ -2,6 +2,7 @@
 
 namespace App\Entity;
 
+use DateTime;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
@@ -25,7 +26,7 @@ class User
     /**
      * @ORM\Column(type="string", length=255)
      */
-    private $username;
+    private $name;
 
     /**
      * @ORM\Column(type="string", length=255)
@@ -33,7 +34,17 @@ class User
     private $password;
 
     /**
-     * @ORM\OneToMany(targetEntity="App\Entity\Task", mappedBy="task_user_id");
+     * @ORM\Column(type="datetime")
+     */
+    private $creation_date;
+
+    /**
+     * @ORM\Column(type="datetime", nullable=true)
+     */
+    private $modification_date;
+
+    /**
+     * @ORM\OneToMany(targetEntity="App\Entity\Task", mappedBy="user_id")
      */
     private $tasks;
 
@@ -42,48 +53,104 @@ class User
         $this->tasks = new ArrayCollection();
     }
 
-    /**
-     * @return integer|null
-     */
     public function getId(): ?int
     {
         return $this->id;
     }
 
-    /**
-     * @return string|null
-     */
-    public function getUsername(): ?string
+    public function getName(): ?string
     {
-        return $this->username ?? null;
+        return $this->name;
+    }
+
+    public function setName(string $name): self
+    {
+        $this->name = $name;
+
+        return $this;
+    }
+
+    public function getPassword(): ?string
+    {
+        return $this->password;
+    }
+
+    public function setPassword(string $password): self
+    {
+        $this->password = $password;
+
+        return $this;
+    }
+
+    public function getEmail(): ?string
+    {
+        return $this->email;
+    }
+
+    public function setEmail(string $email): self
+    {
+        $this->email = $email;
+
+        return $this;
+    }
+
+    public function getCreationDate(): ?\DateTimeInterface
+    {
+        return $this->creation_date;
     }
 
     /**
-     * @param string $username
-     * @return self
+     * @ORM\PrePersist
      */
-    public function setUsername(string $username): self
+    public function setCreationDate(): self
     {
-        $this->username = $username;
+        $this->creation_date = new DateTime();
+
+        return $this;
+    }
+
+    public function getModificationDate(): ?\DateTimeInterface
+    {
+        return $this->modification_date;
+    }
+
+    /**
+     * @ORM\PreUpdate
+     */
+    public function setModificationDate(): self
+    {
+        $this->modification_date = new DateTime();
 
         return $this;
     }
 
     /**
-     * @return string|null
+     * @return Collection|Task[]
      */
-    public function getPassword(): ?string
+    public function getTasks(): Collection
     {
-        return $this->password ?? null;
+        return $this->tasks;
     }
 
-    /**
-     * @param string $password
-     * @return self
-     */
-    public function setPassword(string $password): self
+    public function addTask(Task $task): self
     {
-        $this->password = $password;
+        if (!$this->tasks->contains($task)) {
+            $this->tasks[] = $task;
+            $task->setUserId($this);
+        }
+
+        return $this;
+    }
+
+    public function removeTask(Task $task): self
+    {
+        if ($this->tasks->contains($task)) {
+            $this->tasks->removeElement($task);
+            // set the owning side to null (unless already changed)
+            if ($task->getUserId() === $this) {
+                $task->setUserId(null);
+            }
+        }
 
         return $this;
     }
@@ -104,8 +171,8 @@ class User
      */
     public static function loadValidatorMetadata(ClassMetadata $classMetadata)
     {
-        $classMetadata->addPropertyConstraint('username', new NotBlank());
-        $classMetadata->addPropertyConstraint('username', new Length([
+        $classMetadata->addPropertyConstraint('name', new NotBlank());
+        $classMetadata->addPropertyConstraint('name', new Length([
             'min' => 4,
             'minMessage' => 'Your username should have at least 4 letters',
         ]));
@@ -113,36 +180,5 @@ class User
         $classMetadata->addPropertyConstraint('password', new Length([
             'min' => 6,
         ]));
-    }
-
-    /**
-     * @return Collection|Task[]
-     */
-    public function getTasks(): Collection
-    {
-        return $this->tasks;
-    }
-
-    public function addTask(Task $task): self
-    {
-        if (!$this->tasks->contains($task)) {
-            $this->tasks[] = $task;
-            $task->setTaskUserId($this);
-        }
-
-        return $this;
-    }
-
-    public function removeTask(Task $task): self
-    {
-        if ($this->tasks->contains($task)) {
-            $this->tasks->removeElement($task);
-            // set the owning side to null (unless already changed)
-            if ($task->getTaskUserId() === $this) {
-                $task->setTaskUserId(null);
-            }
-        }
-
-        return $this;
     }
 }

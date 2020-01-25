@@ -6,6 +6,6 @@ use App\Entity\User;
 
 interface UserRepository
 {
-    public function getUserByName(string $name): ?User;
     public function create(User $user): void;
+    public function findOneBy(array $criteria, array $orderBy = null);
 }

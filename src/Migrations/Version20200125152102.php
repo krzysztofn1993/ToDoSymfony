@@ -10,7 +10,7 @@ use Doctrine\Migrations\AbstractMigration;
 /**
  * Auto-generated Migration: Please modify to your needs!
  */
-final class Version20191215150859 extends AbstractMigration
+final class Version20200125152102 extends AbstractMigration
 {
     public function getDescription() : string
     {
@@ -22,8 +22,8 @@ final class Version20191215150859 extends AbstractMigration
         // this up() migration is auto-generated, please modify it to your needs
         $this->abortIf($this->connection->getDatabasePlatform()->getName() !== 'mysql', 'Migration can only be executed safely on \'mysql\'.');
 
-        $this->addSql('CREATE TABLE task (id INT AUTO_INCREMENT NOT NULL, task_user_id_id INT NOT NULL, task_id INT NOT NULL, task_description VARCHAR(1000) NOT NULL, INDEX IDX_527EDB2581952EA0 (task_user_id_id), PRIMARY KEY(id)) DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci ENGINE = InnoDB');
-        $this->addSql('ALTER TABLE task ADD CONSTRAINT FK_527EDB2581952EA0 FOREIGN KEY (task_user_id_id) REFERENCES user (id)');
+        $this->addSql('ALTER TABLE task CHANGE deletion_date deletion_date DATETIME DEFAULT NULL');
+        $this->addSql('ALTER TABLE user CHANGE modification_date modification_date DATETIME DEFAULT NULL');
     }
 
     public function down(Schema $schema) : void
@@ -31,6 +31,7 @@ final class Version20191215150859 extends AbstractMigration
         // this down() migration is auto-generated, please modify it to your needs
         $this->abortIf($this->connection->getDatabasePlatform()->getName() !== 'mysql', 'Migration can only be executed safely on \'mysql\'.');
 
-        $this->addSql('DROP TABLE task');
+        $this->addSql('ALTER TABLE task CHANGE deletion_date deletion_date DATETIME DEFAULT \'NULL\'');
+        $this->addSql('ALTER TABLE user CHANGE modification_date modification_date DATETIME DEFAULT \'NULL\'');
     }
 }
