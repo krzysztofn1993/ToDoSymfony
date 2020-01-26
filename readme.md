@@ -1,16 +1,13 @@
 # ToDo App
-> Todo App for addin tasks to do!
 
 Basic Todo app written in symfony using MariaDb for saving tasks. Also implemented registration and loging in.
 
-![](images/header.png)
-
 ###### Table of contents
-[Installation](#Installation)
-[Usage example](#Usage example)
-[Tasks to do...](#Tasks to do...)
-[Meta](#Installation)
-[Contributing](#Contributing)
+ - [Installation](#Installation)  
+ - [Usage example](#Usage-example)  
+ - [Tasks to do...](#Tasks-to-do)  
+ - [Meta](#Meta)  
+ - [Contributing](#Contributing)  
 
 
 ## Installation
@@ -31,23 +28,23 @@ Basic Todo app written in symfony using MariaDb for saving tasks. Also implement
 - go to [default server listening address](http://127.0.0.1:8000)
 - ***have fun!*** :+1:
 
-## Usage example
-Registering new User
-![](images/new_user.png)
+## Usage-example
+Registering new User  
+![](images/new_user.png)  
 
-Validating credentials
-![](images/validation.png)
+Validating credentials  
+![](images/validation.png)  
 
-Loging in
-![](images/login.png)
+Loging in  
+![](images/login.png)  
 
-Checking session
-![](images/checking_session.png)
+Checking session  
+![](images/checking_session.png)  
 
-Adding and deleting tasks!
-![](images/tasks.png)
+Adding and deleting tasks!  
+![](images/tasks.png)  
 
-## Tasks to do...
+## Tasks-to-do
 - [x] Registering user
 - [x] Login in user
 - [x] Displaying tasks
