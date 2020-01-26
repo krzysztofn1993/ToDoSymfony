@@ -2,6 +2,10 @@
 
 {% block title %}Your tasks{% endblock %}
 
+{% block stylesheets %}
+    <link rel="stylesheet" type="text/css" href="css/app.css"/>
+{% endblock %}
+
 {% block javascripts %}
     <script src='js/tasks/tasks.js'></script>
 {% endblock %}
@@ -18,9 +22,9 @@
         </div>
     </div>
     <div class="row">
-        <ul class="list-group list-group-flush col-sm-8 mx-auto border-top border-bottom border-success">
-            {% for task in tasks %}
-                <li class="list-group-item">{{ task }}</li>
+        <ul class="list-group list-group-flush col-sm-8 mx-auto border-top border-bottom border-success pl-3">
+            {% for task in tasks|reverse %}
+                <li class="list-group-item my-2" data-id={{ task.id }}>{{ task }}</li>
             {% endfor %}
         </ul>
     </div>

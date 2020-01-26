@@ -28,6 +28,13 @@ class TaskRepository extends ServiceEntityRepository implements InterfacesTaskRe
         $em->flush($task);
     }
 
+    public function removeTask(Task $task): void
+    {
+        $em = $this->getEntityManager();
+
+        $em->flush($task);
+    }
+
     // /**
     //  * @return Task[] Returns an array of Task objects
     //  */

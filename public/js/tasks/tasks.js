@@ -1,20 +1,24 @@
 document.addEventListener('DOMContentLoaded', function () {
+    let wordCharacters = /\w+/;
+    let digits = /\d+/;
     let addButton = document.getElementById('add');
     let taskInput = document.getElementById('task-to-add');
+
+    defineListItems();
 
     addButton.addEventListener('click', function () {
         let task = taskInput.value;
 
-        if (!testTask(task)) {
+        if (!testWithPattern(task, wordCharacters)) {
 
             return;
         }
 
-        sendTask(task);
+        addTask(task);
     });
 
     taskInput.addEventListener('keyup', function (event) {
-        if (!testTask(event.target.value)) {
+        if (!testWithPattern(event.target.value, wordCharacters)) {
             event.target.classList.add('border', 'border-warning');
             addButton.classList.add('border', 'border-warning', 'btn-outline-warning');
             addButton.classList.remove('btn-outline-primary');
@@ -25,17 +29,64 @@ document.addEventListener('DOMContentLoaded', function () {
         }
     });
 
-
-    function testTask(task) {
-        return /\w/.test(task);
+    function testWithPattern(task, pattern) {
+        return pattern.test(task);
     }
 
-    function sendTask(task) {
+    function removeTask(id) {
+        let formRequest = new FormData();
+        formRequest.append('id', id);
+        console.log(id);
+
+
+        fetch('./removeTask', {
+            method: 'POST',
+            body: formRequest
+        }).then((response) => {
+            return response.json();
+        }).then((json) => {
+            listItems.forEach(item => {
+                if (item.dataset.id == json.id) {
+                    item.remove();
+                }
+            });
+        })
+    }
+
+    function addTask(task) {
         let formRequest = new FormData();
         formRequest.append('task', task);
         fetch('./addTask', {
             method: 'POST',
             body: formRequest
+        }).then((response) => {
+            return response.json();
+        }).then((json) => {
+            let list = document.querySelector('.list-group');
+            let li = document.createElement('li');
+            li.textContent = json.task;
+            li.classList.add('list-group-item', 'my-2');
+            li.setAttribute('data-id', json.id)
+            list.prepend(li);
+            defineListItems();
         });
     }
+
+    function defineListItems() {
+        listItems = document.querySelectorAll('li');
+
+        listItems.forEach((listItem) => {
+            listItem.addEventListener('click', function (event) {
+                let itemId = event.target.dataset.id;
+
+                if (!testWithPattern(itemId, digits)) {
+
+                    return;
+                }
+
+                removeTask(itemId);
+            });
+        })
+    }
+
 }, false);
