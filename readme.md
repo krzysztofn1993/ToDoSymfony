@@ -12,11 +12,11 @@ Basic Todo app written in symfony using MariaDb for saving tasks. Also implement
 
 ## Installation
 
-** To run you need: **
+**To run you need:**
 - [Composer](https://getcomposer.org)
 - MariaDB (I used one from [XAMPP](https://www.apachefriends.org/pl/index.html)
 
-** Steps to run: **
+**Steps to run:**
 - clone or download
 - go to directory where you cloned/downloaded
 - run ```composer install```
