@@ -2,13 +2,12 @@
 
 Basic Todo app written in symfony using MariaDb for saving tasks. Also implemented registration and loging in.
 
-###### Table of contents
+### Table of contents
  - [Installation](#Installation)  
  - [Usage example](#Usage-example)  
  - [Tasks to do...](#Tasks-to-do)  
  - [Meta](#Meta)  
  - [Contributing](#Contributing)  
-
 
 ## Installation
 
