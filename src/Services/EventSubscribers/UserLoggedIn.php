@@ -24,7 +24,7 @@ class UserLoggedIn implements EventSubscriberInterface
         $session->migrate();
 
         if ($controller instanceof UserLoggedInController && !$event->getRequest()->getSession()->has('user_id')) {
-            // $session->getFlashBag()->add('warning', 'You have to be logged in.');
+            $session->getFlashBag()->add('warning', 'You have to be logged in.');
             $event->setController(function () {
                 return new RedirectResponse('/');
             });
