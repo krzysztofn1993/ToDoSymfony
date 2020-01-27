@@ -13,19 +13,19 @@ Basic Todo app written in symfony using MariaDb for saving tasks. Also implement
 
 **To run you need:**
 - [Composer](https://getcomposer.org)
-- MariaDB (I used one from [XAMPP](https://www.apachefriends.org/pl/index.html)
+- MariaDB (I used one from [XAMPP](https://www.apachefriends.org/pl/index.html))
 
 **Steps to run:**
-- clone or download
-- go to directory where you cloned/downloaded
-- run ```composer install```
-- run your MariaDB
-- run ```cp .env.example .env```
-- run ```php bin\console server:run```
-- run ```php bin\console doctrine:database:create```
-- run ```php bin\console doctrine:migrations:migrate```
-- go to [default server listening address](http://127.0.0.1:8000)
-- ***have fun!*** :+1:
+1. clone or download
+2. go to directory where you cloned/downloaded
+3. run ```composer install```
+4. run your MariaDB
+5. run ```cp .env.example .env```
+6. run ```php bin\console server:run```
+7. run ```php bin\console doctrine:database:create```
+8. run ```php bin\console doctrine:migrations:migrate```
+9. go to [default server listening address](http://127.0.0.1:8000)
+10. ***have fun!*** :+1:
 
 ## Usage-example
 Registering new User  
