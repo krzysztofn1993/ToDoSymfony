@@ -2,12 +2,14 @@
 
 Basic Todo app written in symfony using MariaDb for saving tasks. Also implemented registration and loging in.
 
-### Table of contents
+***
+## Table of contents
  - [Installation](#Installation)  
  - [Usage example](#Usage-example)  
  - [Tasks to do...](#Tasks-to-do)  
  - [Meta](#Meta)  
  - [Contributing](#Contributing)  
+***
 
 ## Installation
 
@@ -26,22 +28,35 @@ Basic Todo app written in symfony using MariaDb for saving tasks. Also implement
 8. run ```php bin\console doctrine:migrations:migrate```
 9. go to [default server listening address](http://127.0.0.1:8000)
 10. ***have fun!*** :+1:
+***
 
 ## Usage-example
-Registering new User  
-![](images/new_user.png)  
+Registering new User    
+<p align="center">
+  <img width="470" height="400" src="./images/new_user.png">
+</p>
 
 Validating credentials  
-![](images/validation.png)  
+<p align="center">
+  <img width="470" height="400" src="./images/validation.png">
+</p>
 
 Loging in  
-![](images/login.png)  
+<p align="center">
+  <img width="470" height="400" src="./images/login.png">
+</p>
 
 Checking session  
-![](images/checking_session.png)  
+<p align="center">
+  <img width="470" height="400" src="./images/checking_session.png">
+</p>
 
 Adding and deleting tasks!  
-![](images/tasks.png)  
+<p align="center">
+  <img width="838" height="400" src="./images/tasks.png">
+</p>
+
+***
 
 ## Tasks-to-do
 - [x] Registering user
@@ -52,7 +67,8 @@ Adding and deleting tasks!
 - [ ] Logout for user
 - [ ] History for tasks
 - [ ] Improve UI/UX
-- [ ] Unit tests
+- [ ] Unit tests  
+***
 
 ## Meta
 
@@ -61,6 +77,7 @@ Krzysztof Nowak – krzysztofn1993@gmail.com
 Distributed under the MIT license. See [MIT License](https://choosealicense.com/licenses/mit/) for more information.
 
 [https://github.com/krzysztofn1993](https://github.com/krzysztofn1993)
+***
 
 ## Contributing
 
