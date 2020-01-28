@@ -49,4 +49,20 @@ class LoginController extends AbstractController
             'form' => $form->createView(),
         ]);
     }
+
+    /**
+     * @Route("/logout", name="logout")
+     */
+    public function logout(Request $request)
+    {
+        $session = $request->getSession();
+
+        $userId = $session->get('user_id');
+
+        if (isset($userId)) {
+            $session->clear();
+        }
+
+        return $this->redirectToRoute('home');
+    }
 }

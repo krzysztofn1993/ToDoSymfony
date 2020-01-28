@@ -68,6 +68,7 @@ document.addEventListener('DOMContentLoaded', function () {
             li.classList.add('list-group-item', 'my-2');
             li.setAttribute('data-id', json.id)
             list.prepend(li);
+            taskInput.value = '';
             defineListItems();
         });
     }
