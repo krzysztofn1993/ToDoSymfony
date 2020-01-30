@@ -84,4 +84,21 @@ class TasksController extends AbstractController implements UserLoggedInControll
 
         return new JsonResponse(['error' => 'Could not find task for this user.', Response::HTTP_BAD_REQUEST]);
     }
+
+    /**
+     * @Route("/tasks-history", name="history")
+     */
+    public function tasksHistory(Request $request)
+    {
+        $tasks = $this->taskRepository->findBy([
+            'user' => 1
+        ]);
+
+        return $this->render(
+            'history/index.html.twig',
+            [
+                'tasks' => $tasks
+            ]
+        );
+    }
 }

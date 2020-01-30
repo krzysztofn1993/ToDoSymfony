@@ -63,9 +63,10 @@ Adding and deleting tasks!
 - [x] Login in user
 - [x] Displaying tasks
 - [x] Readme.md
-- [ ] Change endpoints according to REST API
-- [ ] Logout for user
-- [ ] History for tasks
+- [ ] Pagination at tasks
+- [ ] Pagination at history
+- [x] Logout for user
+- [x] History for tasks
 - [ ] Improve UI/UX
 - [ ] Unit tests  
 ***

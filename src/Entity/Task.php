@@ -74,9 +74,9 @@ class Task
         return $this;
     }
 
-    public function getCreationDate(): ?\DateTimeInterface
+    public function getCreationDate(): string
     {
-        return $this->creationDate;
+        return $this->creationDate->format('Y-m-d H:i:s');
     }
 
     /**
@@ -93,9 +93,13 @@ class Task
         return $this;
     }
 
-    public function getDeletionDate(): ?\DateTimeInterface
+    public function getDeletionDate(): ?string
     {
-        return $this->deletionDate;
+        if ($this->deletionDate === null) {
+            return null;
+        }
+
+        return $this->deletionDate->format('Y-m-d H:i:s');
     }
 
     public function markAsDeleted(): self
