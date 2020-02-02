@@ -35,6 +35,11 @@ class TaskRepository extends ServiceEntityRepository implements InterfacesTaskRe
         $em->flush($task);
     }
 
+    public function findByAndCount(array $criteria): ?int
+    {
+        return count($this->findBy($criteria));
+    }
+
     // /**
     //  * @return Task[] Returns an array of Task objects
     //  */

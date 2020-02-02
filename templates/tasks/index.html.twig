@@ -11,7 +11,6 @@
 {% endblock %}
 
 {% block body %}
-
 <div class="container">
     <div class="row mt-2 justify-content-end">
         <div class="col-1">
@@ -35,6 +34,21 @@
                 <li class="list-group-item my-2" data-id={{ task.id }}>{{ task }}</li>
             {% endfor %}
         </ul>
+    </div>
+    <div class="row">
+        <nav class="mx-auto mt-2" >
+            <ul class="pagination">
+                <li class="page-item {% if page is same as(0) %} disabled {% endif %}">
+                    <a class="page-link" href="/tasks?page={% if page is same as(0) %} 0 {% endif %}">Previous</a>
+                </li>
+                {% for i in 0..pagesToDisplay %}
+                    {{ 'aaaaaaaaa' }}
+                {% endfor %}
+                <li class="page-item {% if page is same as(pagesToDisplay) %} disabled {% endif %}">
+                    <a class="page-link" href="{% if page is same as(pagesToDisplay) %} page {% endif %}"">Next</a>
+                </li>
+            </ul>
+        </nav>
     </div>
 </div>
 {% endblock %}
