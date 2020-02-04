@@ -30,13 +30,16 @@ class TasksController extends AbstractController implements UserLoggedInControll
     {
         $requestedPage = $request->query->get('page');
         $userId = $request->getSession()->get('user_id');
-        $page = $requestedPage >= 0 && is_numeric($requestedPage) ?
-            (int) $requestedPage :
-            0;
+        $page = $requestedPage >= 0 && is_numeric($requestedPage)
+            ? (int) $requestedPage
+            : 0;
         $pagesToDisplay = (int) ($this->taskRepository->findByAndCount([
             'user' => $userId,
             'deletionDate' => null
-        ]) / 10);
+        ]));
+
+        $pagesToDisplay = (int) ($pagesToDisplay % 10 ? $pagesToDisplay / 10 : $pagesToDisplay / 10 - 1);
+
         $tasks = $this->taskRepository->findBy(
             [
                 'user' => $userId,
@@ -46,6 +49,10 @@ class TasksController extends AbstractController implements UserLoggedInControll
             10,
             $page * 10
         );
+
+        if ($page > 0 && empty($tasks)) {
+            return $this->redirectToRoute('tasks');
+        }
 
         return $this->render(
             'tasks/index.html.twig',
