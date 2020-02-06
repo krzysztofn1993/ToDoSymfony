@@ -142,19 +142,6 @@ class User
         return $this;
     }
 
-    public function removeTask(Task $task): self
-    {
-        if ($this->tasks->contains($task)) {
-            $this->tasks->removeElement($task);
-            // set the owning side to null (unless already changed)
-            if ($task->getUserId() === $this) {
-                $task->setUserId(null);
-            }
-        }
-
-        return $this;
-    }
-
     /**
      * @ORM\PrePersist
      */

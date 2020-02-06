@@ -40,6 +40,20 @@ class TaskRepository extends ServiceEntityRepository implements InterfacesTaskRe
         return count($this->findBy($criteria));
     }
 
+    /**
+     * This method should not be used. It is used only in unit tests
+     *
+     * @param Task $task
+     * @return void
+     */
+    public function eraseTask(Task $task): void
+    {
+        $em = $this->getEntityManager();
+
+        $em->remove($task);
+        $em->flush($task);
+    }
+
     // /**
     //  * @return Task[] Returns an array of Task objects
     //  */

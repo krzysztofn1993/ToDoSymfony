@@ -8,4 +8,5 @@ interface UserRepository
 {
     public function create(User $user): void;
     public function findOneBy(array $criteria, array $orderBy = null);
+    public function remove(User $user): void;
 }

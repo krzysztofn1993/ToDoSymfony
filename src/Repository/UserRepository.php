@@ -28,6 +28,14 @@ class UserRepository extends ServiceEntityRepository implements InterfacesUserRe
         $em->flush($user);
     }
 
+    public function remove(User $user): void
+    {
+        $em = $this->getEntityManager();
+
+        $em->remove($user);
+        $em->flush($user);
+    }
+
     // /**
     //  * @return User[] Returns an array of User objects
     //  */
