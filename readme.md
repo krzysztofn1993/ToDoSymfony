@@ -68,7 +68,7 @@ Adding and deleting tasks!
 - [x] Logout for user
 - [x] History for tasks
 - [ ] Improve UI/UX
-- [ ] Unit tests  
+- [x] Unit tests  
 ***
 
 ## Meta
