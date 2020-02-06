@@ -63,8 +63,8 @@ Adding and deleting tasks!
 - [x] Login in user
 - [x] Displaying tasks
 - [x] Readme.md
-- [ ] Pagination at tasks
-- [ ] Pagination at history
+- [x] Pagination at tasks
+- [x] Pagination at history
 - [x] Logout for user
 - [x] History for tasks
 - [ ] Improve UI/UX
