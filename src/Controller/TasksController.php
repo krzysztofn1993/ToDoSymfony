@@ -6,6 +6,7 @@ use App\Entity\Task;
 use App\Interfaces\TaskRepository;
 use App\Interfaces\UserLoggedInController;
 use App\Interfaces\UserRepository;
+use App\Services\Helpers\PaginationHelper;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
@@ -33,12 +34,12 @@ class TasksController extends AbstractController implements UserLoggedInControll
         $page = $requestedPage >= 0 && is_numeric($requestedPage)
             ? (int) $requestedPage
             : 0;
-        $pagesToDisplay = (int) ($this->taskRepository->findByAndCount([
+        $tasksCount = (int) ($this->taskRepository->findByAndCount([
             'user' => $userId,
             'deletionDate' => null
         ]));
 
-        $pagesToDisplay = (int) ($pagesToDisplay % 10 ? $pagesToDisplay / 10 : $pagesToDisplay / 10 - 1);
+        $pagesToDisplay = PaginationHelper::pagesToDisplay($tasksCount, 10);
 
         $tasks = $this->taskRepository->findBy(
             [
@@ -113,14 +114,33 @@ class TasksController extends AbstractController implements UserLoggedInControll
      */
     public function tasksHistory(Request $request)
     {
-        $tasks = $this->taskRepository->findBy([
-            'user' => 1
-        ]);
+        $requestedPage = $request->query->get('page');
+        $userId = $request->getSession()->get('user_id');
+        $page = $requestedPage >= 0 && is_numeric($requestedPage)
+            ? (int) $requestedPage
+            : 0;
+        $tasksCount = (int) ($this->taskRepository->findByAndCount([
+            'user' => $userId
+        ]));
+
+        $pagesToDisplay = PaginationHelper::pagesToDisplay($tasksCount, 10);
+
+        $tasks = $this->taskRepository->findBy(
+            [
+                'user' => $userId,
+                'deletionDate' => null,
+            ],
+            null,
+            10,
+            $page * 10
+        );
 
         return $this->render(
             'history/index.html.twig',
             [
-                'tasks' => $tasks
+                'tasks' => $tasks,
+                'page' => $page,
+                'pagesToDisplay' => $pagesToDisplay
             ]
         );
     }

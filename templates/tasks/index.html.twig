@@ -1,56 +1,57 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Your tasks{% endblock %}
+{% block title %}Your tasks
+{% endblock %}
 
 {% block stylesheets %}
-    <link rel="stylesheet" type="text/css" href="css/tasks.css"/>
+	<link rel="stylesheet" type="text/css" href="css/tasks.css"/>
 {% endblock %}
 
 {% block javascripts %}
-    <script src='js/tasks/tasks.js'></script>
+	<script src='js/tasks/tasks.js'></script>
 {% endblock %}
 
 {% block body %}
-<div class="container">
-    <div class="row mt-2 justify-content-end">
-        <div class="col-1">
-            <a href="/tasks-history">History</a>
-        </div>
-        <div class="col-1">
-            <a href="/logout">Logout</a>
-        </div>
-    </div>
-    <div class="row">
-        <div class="input-group my-3 col-sm-6 mx-auto">
-            <input type="text" id="task-to-add" required class="form-control" placeholder="Your task to do..." aria-label="Your tasks to do" aria-describedby="basic-addon2">
-            <div class="input-group-append">
-                <button class="btn btn-outline-primary" id="add" type="button">Add</button>
-            </div>
-        </div>
-    </div>
-    <div class="row">
-        <ul class="list-group list-group-flush col-sm-8 mx-auto border-top border-bottom border-dark pl-3">
-            {% for task in tasks|reverse %}
-                <li class="list-group-item my-2" data-id={{ task.id }}>{{ task }}</li>
-            {% endfor %}
-        </ul>
-    </div>
-    <div class="row">
-        <nav class="mx-auto mt-2" >
-            <ul class="pagination">
-                <li class="page-item {% if page is same as(0) %} disabled {% endif %}">
-                    <a class="page-link" href="/tasks?page={% if page is same as(0) %} 0 {% else %} {{ page - 1 }} {% endif %}">Previous</a>
-                </li>
-                {% for i in 0..pagesToDisplay %}
-                    <li class="page-item">
-                        <a class="page-link" href="/tasks?page={{ i }}">{{ i }}</a>
-                    </li>
-                {% endfor %}
-                <li class="page-item {% if page is same as(pagesToDisplay) %} disabled {% endif %}">
-                    <a class="page-link" href="/tasks?page={% if page is same as(pagesToDisplay) %} {{ page }} {% else %} {{ page + 1 }} {% endif %}"">Next</a>
-                </li>
-            </ul>
-        </nav>
-    </div>
-</div>
+	<div class="container">
+		<div class="row mt-2 justify-content-end">
+			<div class="col-1">
+				<a href="/tasks-history">History</a>
+			</div>
+			<div class="col-1">
+				<a href="/logout">Logout</a>
+			</div>
+		</div>
+		<div class="row">
+			<div class="input-group my-3 col-sm-6 mx-auto">
+				<input type="text" id="task-to-add" required class="form-control" placeholder="Your task to do..." aria-label="Your tasks to do" aria-describedby="basic-addon2">
+				<div class="input-group-append">
+					<button class="btn btn-outline-primary" id="add" type="button">Add</button>
+				</div>
+			</div>
+		</div>
+		<div class="row">
+			<ul class="list-group list-group-flush col-sm-8 mx-auto border-top border-bottom border-dark pl-3">
+				{% for task in tasks|reverse %}
+					<li class="list-group-item my-2" data-id={{ task.id }}>{{ task }}</li>
+				{% endfor %}
+			</ul>
+		</div>
+		<div class="row">
+			<nav class="mx-auto mt-2">
+				<ul class="pagination">
+					<li class="page-item {% if page is same as(0) %} disabled {% endif %}">
+						<a class="page-link" href="/tasks?page={% if page is same as(0) %} 0 {% else %} {{ page - 1 }} {% endif %}">Previous</a>
+					</li>
+					{% for i in 0..pagesToDisplay %}
+						<li class="page-item">
+							<a class="page-link" href="/tasks?page={{ i }}">{{ i }}</a>
+						</li>
+					{% endfor %}
+					<li class="page-item {% if page is same as(pagesToDisplay) %} disabled {% endif %}">
+						<a class="page-link" href="/tasks?page={% if page is same as(pagesToDisplay) %} {{ page }} {% else %} {{ page + 1 }} {% endif %}">Next</a>
+					</li>
+				</ul>
+			</nav>
+		</div>
+	</div>
 {% endblock %}
